@@ -32,6 +32,7 @@ import lightmap_full_lights_no_pipe from './assets/Lights/full-lights-pipe-broke
 import lightmap_full_lights from './assets/Lights/full-lights.png';
 
 import { runInThisContext } from 'vm';
+import SpotlightPipeline from "./shaders/spotlightPipeline";
 
 export default class GameScene extends Scene {
 	constructor() {
@@ -236,6 +237,13 @@ export default class GameScene extends Scene {
 		dialog.show('speech-awakening');
 		// dialog.show('critter-001');
 		// dialog.show('generator-console');
+		
+		
+		this.playerSpotlight = this.game.renderer.addPipeline('PlayerSpotlight', new SpotlightPipeline(this.game));
+		this.playerSpotlight.setFloat1('r', 0.05);
+		this.playerSpotlight.setFloat2('resolution', this.game.config.width, this.game.config.height);
+		// this.playerSpotlight.setFloat2('resolution', this.game.config.width, this.game.config.height);
+		this.cameras.main.setRenderToTexture(this.playerSpotlight);
 	}
 
 	setLightmask(key) {
@@ -252,7 +260,7 @@ export default class GameScene extends Scene {
 		}
 		this.lightMask = lightMask;
 
-		this.cameras.main.setMask(new Phaser.Display.Masks.BitmapMask(this, lightMask));
+		// this.cameras.main.setMask(new Phaser.Display.Masks.BitmapMask(this, lightMask));
 
 	}
 

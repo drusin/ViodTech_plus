@@ -88,5 +88,10 @@ export default class Player {
 
     update() {
         this._updateAnimation();
+        // this.scene.playerSpotlight.setFloat1('tx', this.sprite.x / this.scene.game.config.width);
+        // this.scene.playerSpotlight.setFloat1('ty', 1 - this.sprite.y / this.scene.game.config.height);
+        let numbers = [0.5, 0.5, 0, 0, 0, 1, 1, 0, 1, 1];
+        this.scene.playerSpotlight.setFloat2v('pos', new Float32Array(numbers));
+        // this.scene.playerSpotlight.setFloat1('ty', new Float32Array([0.5]));
     }
 }
