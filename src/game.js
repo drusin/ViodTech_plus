@@ -10,7 +10,7 @@ const config = {
 	parent: 'canvas-parent',
 	scale: {
 		parent: 'phaser',
-		mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
+		mode: Phaser.Scale.FIT,
 		width: 320,
 		height: 200,
 		max: {

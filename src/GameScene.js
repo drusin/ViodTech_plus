@@ -1,7 +1,7 @@
 import { Scene } from 'phaser';
 
 import mapJson from './assets/ship.json';
-import tiles from './assets/Tiles.png';
+import tiles from './assets/Tiles-extruded.png';
 import player_acting from './assets/Dave acting.png'
 import daveLying from './assets/Dave-lying.png'
 import critter_eating from './assets/Critter.png'
@@ -106,7 +106,7 @@ export default class GameScene extends Scene {
 			const trigger = left === this.player.sprite ? right : left;
 			dialog.show(trigger.getData("action"));
 			trigger.destroy();
-		})
+		});
 
 		const commonSpritePostProcessing = (sprite, obj) => {
 			sprite.setDisplaySize(obj.width, obj.height);
@@ -118,11 +118,11 @@ export default class GameScene extends Scene {
 					sprite.setData(prop.name, prop.value);
 				});
 			}
-		}
+		};
 
 		const objectsLayer1 = tilemap.getObjectLayer('objects').objects;
 		const objectsLayer2 = tilemap.getObjectLayer('otherObjects').objects;
-		const objects = objectsLayer1.concat(objectsLayer2)
+		const objects = objectsLayer1.concat(objectsLayer2);
 		objects.forEach(obj => {
 			if (obj.type === "door-trigger") {
 				const sprite = this.physics.add.sprite(obj.x, obj.y, null);
@@ -161,7 +161,7 @@ export default class GameScene extends Scene {
 		this.physics.world.OVERLAP_BIAS = 1; // we don't want to automatically resolve overlaps
 		
 		const map = this.make.tilemap({ key: 'map' });
-		const tileset = map.addTilesetImage('Tiles', 'tiles');
+		const tileset = map.addTilesetImage('Tiles', 'tiles', 16, 16, 1, 2);
 		const animatedTileset = map.addTilesetImage('Assets', 'assets');
 		const lightsTileset = map.addTilesetImage('Lights', 'lights');
 		const doorTileset = map.addTilesetImage('door');
@@ -219,7 +219,7 @@ export default class GameScene extends Scene {
 
 		dialog.init(this.Dialog, this, this.player);
 		stateMachine.init(this.player);
-		this.cameras.main.startFollow(this.player.sprite);
+		this.cameras.main.startFollow(this.player.sprite, false, 1, 1);
 		
 		this.setLightmask('bedroom-dark');
 
@@ -249,7 +249,7 @@ export default class GameScene extends Scene {
 		lightMask.update = () => {
 			lightMask.x = Math.round(32 + this.game.config.width - this.cameras.main.scrollX);
 			lightMask.y = Math.round(96 + this.game.config.height - this.cameras.main.scrollY);
-		}
+		};
 		this.lightMask = lightMask;
 
 		this.cameras.main.setMask(new Phaser.Display.Masks.BitmapMask(this, lightMask));
